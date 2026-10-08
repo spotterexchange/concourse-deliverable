@@ -40,6 +40,7 @@ AI report interpretation is optional. Copy `.env.example` to `.env.local` and se
 
 ## Documentation
 
+- [`docs/CONTEXT.md`](docs/CONTEXT.md): **start here**, the one-read briefing (assignment, RFP, build, how to record and submit)
 - [`PLAN.md`](PLAN.md): RFP selection, scope, and timebox
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): system design, data model, request flows, production path
 - [`docs/DECISIONS.md`](docs/DECISIONS.md): architecture decision records (why each choice was made)
