@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Light-only by design: county staff work on shared office machines and
+   printed reports; one well-tested theme beats two half-tested ones (ADR-007). */
+:root {
+  color-scheme: light;
+  --surface: #f6f7f9;
+  --card: #ffffff;
+  --ink: #111827;
+  --ink-2: #4b5563;
+  --ink-3: #6b7280;
+  --line: #e5e7eb;
+  --brand: #1e3a5f;
+  --series-1: #2a78d6;
+  --good: #0ca30c;
+  --warning: #fab219;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-series-1: var(--series-1);
+  --font-sans: var(--font-geist-sans);
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+}

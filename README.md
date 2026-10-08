@@ -1,1 +1,44 @@
-# concourse-deliverable
+# Intercept: Juvenile Services Case Management (demo)
+
+A working demo built in response to **Erie County, NY RFP #2026-052VF: Juvenile Justice Services Case Management Platform** (Department of Health; proposals due Oct 15, 2026). It was built as a Concourse Forward Deployed PM take-home.
+
+> All people, providers and records are **synthetic**. Case data never leaves the browser.
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+## What it does
+
+| For | Screen | RFP requirement it answers |
+|---|---|---|
+| Program supervisor | **Dashboard**: caseload by worker, overdue tasks, active-youth pipeline, **provider outcomes** with a flagged insight | §V Operational: "dashboard … case load, status, tasks, and outcomes"; §I "outcomes and practices of each treatment provider … to inform systems level improvements" |
+| Case manager | **Caseload** search and filters → **Youth profile** with a stage-driven *next step*, tasks, contacts, audit trail | §V Programmatic: case management, referrals, data at each intercept; §VI audit logs |
+| Case manager | **New intake** → live **CRAFFT 2.1** screening with skip logic and scoring | §V Programmatic: validated screening tools for under-25s |
+| Guardian | **Family portal preview**: logistics only, clinical and court fields hidden | §V Programmatic: secondary portal "without exposing sensitive or protected information" |
+| Guardian | **Text reminder** (simulated) with a privacy-safe template | §V Programmatic: text reminders |
+| Supervisor / analyst | **Ask a report**: a plain-English question becomes an editable report, with CSV export | §V Operational: reports "without excessive coding by the end-user" |
+| Evaluators | **Security & compliance**: every requirement marked *working / simulated / production commitment*, plus 5-year cost | §V Technical, §VI, Financial |
+
+## Run it
+
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm test           # engine, CRAFFT scoring, rules parser
+```
+
+AI report interpretation is optional. Copy `.env.example` to `.env.local` and set `CEREBRAS_API_KEY`. Without a key, the keyword-rules parser answers instead, and the UI says which one answered.
+
+## Deploy (Vercel)
+
+1. Vercel → **Add New Project** → import `spotterexchange/concourse-deliverable`. The framework is auto-detected and needs no build settings.
+2. *(Optional)* Under **Settings → Environment Variables**, add `CEREBRAS_API_KEY`.
+3. Deploy. Functions are pinned to `iad1` (US East) in `vercel.json`.
+
+## Documentation
+
+- [`PLAN.md`](PLAN.md): RFP selection, scope, and timebox
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): system design, data model, request flows, production path
+- [`docs/DECISIONS.md`](docs/DECISIONS.md): architecture decision records (why each choice was made)
+- [`docs/RFP_TRACEABILITY.md`](docs/RFP_TRACEABILITY.md): requirement → feature mapping
+- [`docs/PROCESS.md`](docs/PROCESS.md): how the build was directed with AI, and where we stopped
+- [`docs/LOOM_SCRIPT.md`](docs/LOOM_SCRIPT.md): the buyer-facing walkthrough

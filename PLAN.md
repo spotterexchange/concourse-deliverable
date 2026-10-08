@@ -41,7 +41,7 @@ Real SSO/MFA, real SMS, e-signatures, HIPAA hosting/BAAs, and SOC 2. These are p
 ## Build approach
 
 - **Stack:** Next.js (App Router) + Tailwind, seeded JSON (~40 synthetic youth, 5 providers, 4 case managers), client state, deploy to **Vercel** (bonus).
-- **AI report builder:** a server route calls the Claude API. The model returns a structured query spec (filter/group/metric), and the app computes results over seed data. The model never sees raw records. That's also the production privacy story: in production, inference runs in a US region under a BAA.
+- **AI report builder:** a server route calls an LLM (Cerebras `gpt-oss-120b`, free tier; see docs/DECISIONS.md ADR-005). The model returns a structured query spec (filter/group/metric), and the app computes results over seed data. The model never sees raw records. That's also the production privacy story: in production, inference runs in a US region under a BAA.
 - **How we direct Claude Code:** we provide one spec prompt (this file + the data model), then iterate by screen. We don't hand-write code. We keep a short `PROCESS.md` log of the prompts and judgment calls, which serves as evidence for "how you direct AI tools."
 
 ## Timeline (~60 min)
