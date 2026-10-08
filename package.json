@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --import tsx --test tests/*.test.ts",
-    "docs:trace": "tsx scripts/traceability.ts"
+    "docs:trace": "tsx scripts/traceability.ts",
+    "eval:model": "tsx scripts/eval-model.ts"
   },
   "dependencies": {
     "next": "15.5.27",

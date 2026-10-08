@@ -1,6 +1,14 @@
 import { Card, PageHeader } from "@/components/ui";
 import { SCREENING_LIBRARY } from "@/lib/crafft";
 import { TRACEABILITY, type Status } from "@/lib/traceability";
+import { DataExport } from "@/components/DataExport";
+
+const TIMELINE = [
+  { when: "Weeks 1–2", what: "Kickoff, County IdP (SSO/MFA) connection, confirm stages, outcome definitions and roles", county: "Name a project lead; IT provides IdP metadata; program staff join two 1-hour workshops" },
+  { when: "Weeks 3–4", what: "Configure forms (CRAFFT + chosen tools), provider list, reports; load any existing records", county: "Approve form and report drafts; share existing data extract if any" },
+  { when: "Week 5", what: "Training (2 × 90-min sessions + recordings) and a test week with real workflows", county: "Case managers and supervisors attend; report issues in the shared tracker" },
+  { when: "Week 6", what: "Go live. Daily check-ins for 2 weeks, then a weekly 30-minute review through the pilot", county: "Sign off go-live; keep a weekly slot for feedback" },
+];
 
 const STATUS: Record<Status, { label: string; cls: string }> = {
   built: { label: "Working in demo", cls: "bg-green-50 text-green-800 ring-green-200" },
@@ -37,7 +45,7 @@ export default function Security() {
         </div>
       </Card>
 
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card title="Validated screening tools (youth & young adults under 25)">
           <table className="w-full text-sm">
             <thead className="text-xs text-ink-2 text-left"><tr className="border-b border-line"><th className="py-1.5 font-medium">Tool</th><th className="py-1.5 font-medium">Ages</th><th className="py-1.5 font-medium">Purpose</th></tr></thead>
@@ -50,10 +58,26 @@ export default function Security() {
               {[["Year 1: setup, configuration, training, hosting", "$17,000"], ["Year 2: hosting, support, iteration", "$8,000"], ["Year 3", "$8,000"], ["Years 4–5 (if extended)", "$16,000"]].map(([k, v]) => (
                 <tr key={k} className="border-b border-line"><td className="py-1.5">{k}</td><td className="text-right">{v}</td></tr>
               ))}
+              <tr className="border-b border-line"><td className="py-1.5">Data extraction (any time) and full return on exit</td><td className="text-right">$0</td></tr>
+              <tr className="border-b border-line"><td className="py-1.5">Read-only retention for 90 days after discontinuation, then certified deletion</td><td className="text-right">$0</td></tr>
               <tr><td className="py-1.5 font-semibold">5-year total cost of ownership</td><td className="text-right font-semibold">$49,000</td></tr>
             </tbody>
           </table>
-          <p className="text-xs text-ink-3 mt-2">No per-seat fees, so provider and family portal users are included. Data export is free at any time and on exit.</p>
+          <p className="text-xs text-ink-3 mt-2">No per-seat fees, so provider and family portal users are included. Growth (more youth, staff or programs) doesn&apos;t change the price within the contract term.</p>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+        <Card title="Implementation timeline: award to go-live in 6 weeks" className="lg:col-span-2">
+          <table className="w-full text-sm">
+            <thead className="text-xs text-ink-2 text-left"><tr className="border-b border-line"><th className="py-1.5 pr-3 font-medium">When</th><th className="py-1.5 pr-3 font-medium">We do</th><th className="py-1.5 font-medium">We need from the County</th></tr></thead>
+            <tbody>{TIMELINE.map((t) => <tr key={t.when} className="border-b border-line last:border-0 align-top"><td className="py-1.5 pr-3 whitespace-nowrap font-medium">{t.when}</td><td className="py-1.5 pr-3">{t.what}</td><td className="py-1.5 text-ink-2">{t.county}</td></tr>)}</tbody>
+          </table>
+          <p className="text-xs text-ink-3 mt-2">Releases ship weekly with no downtime windows; status and uptime history are published on a public status page. Support requests are answered within one business day.</p>
+        </Card>
+        <Card title="Your data">
+          <p className="text-sm text-ink-2 mb-3">The County owns all data. Take a complete copy, or the audit log, at any time. No ticket, no fee.</p>
+          <DataExport />
         </Card>
       </div>
     </>

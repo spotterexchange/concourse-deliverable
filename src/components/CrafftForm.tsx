@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CRAFFT_PART_A, partBQuestions, scoreCrafft } from "@/lib/crafft";
+import { CRAFFT_PART_A, cleanAnswers, partBQuestions, scoreCrafft } from "@/lib/crafft";
 import { RiskBadge, btn } from "./ui";
 import type { Screening } from "@/lib/types";
 
@@ -50,7 +50,7 @@ export function CrafftForm({ onSubmit, submitLabel = "Save screening" }: { onSub
         </div>
         <button
           type="button" disabled={!complete} className={btn}
-          onClick={() => onSubmit({ tool: "CRAFFT 2.1", date: new Date().toISOString().slice(0, 10), answers, score, risk })}
+          onClick={() => onSubmit({ tool: "CRAFFT 2.1", date: new Date().toISOString().slice(0, 10), answers: cleanAnswers(answers), score, risk })}
         >
           {submitLabel}
         </button>

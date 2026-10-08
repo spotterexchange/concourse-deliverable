@@ -39,7 +39,8 @@ Short records of the choices that shape this build: what we chose, why, and what
 **Decision.** Use Cerebras `gpt-oss-120b` through its OpenAI-compatible API with:
 - presets that carry their spec (0 tokens), plus browser and server caches for repeat questions;
 - a terse system prompt (~250 tokens), `reasoning_effort: "low"`, `max_completion_tokens: 400`, JSON mode, `temperature: 0`;
-- a 200-character question cap, 20 requests/min per instance, an 8-second timeout;
+- a 200-character question cap, 20 requests/min and **200 requests/day** per instance (`REPORT_DAILY_MODEL_CALLS`), an 8-second timeout;
+- input validated *before* any model call; an over-long title is trimmed rather than discarding a paid response;
 - model and base URL set by environment variables, so swapping providers is configuration, not code.
 
 **Why.** A typical uncached question costs roughly 400–600 tokens total, so the free tier covers thousands of demo questions. Raw fetch avoids an SDK dependency for a single endpoint.
@@ -58,10 +59,22 @@ Short records of the choices that shape this build: what we chose, why, and what
 ## ADR-008: Synthetic data from a simulation, with a fixed seed
 
 **Decision.** The seed generator simulates each youth through the stages using per-provider wait, engagement and completion parameters, with a fixed PRNG seed.
-**Why.** The dashboard tells a coherent story: e.g. *Northgate's 27-day wait vs. ~11 days program-wide* emerges from the simulation instead of being typed in. A fixed seed makes the Loom and the live URL show the same picture. Tests assert the story holds.
+**Why.** The dashboard tells a coherent story: e.g. *Northgate's wait is more than twice the program average* emerges from the simulation instead of being typed in. A fixed seed (dates are relative to today) makes the Loom and the live URL tell the same story. Tests assert the story holds.
 
 ## ADR-009: CRAFFT 2.1 is the one live screening tool
 
 **Decision.** Implement CRAFFT 2.1 fully (Part A gate, Part B, ≥2 cutoff). List GAIN-SS, PHQ-A, MAYSI-2, GAD-7 and ACE-Q as configurable forms.
 **Why.** The program is the *Juvenile Substance Use* Services Coordination Program. CRAFFT is the most widely recommended adolescent substance-use screen, and it's short enough to run live in a demo. One real tool with correct scoring is more convincing than six mock-ups.
 **Trade-off.** Part A is simplified to yes/no (the published form asks for days of use). The production form would use the licensed wording verbatim.
+
+## ADR-010: Part 2 consent gates what the provider portal shows
+
+**Context.** The RFP asks for "secondary portals to share information with families **and providers** without exposing sensitive or protected information", and for signed forms retained in the platform. Under 42 CFR Part 2, sharing substance-use screening results with a treatment provider generally requires written consent.
+**Decision.** The guardian signs a Part 2 consent in the family portal: a typed e-signature, timestamped, stored as a `SignedDocument`, and written to the audit trail. The provider portal shows the referral and appointments to the referred provider only. **Screening results appear only once that consent exists.** Referring without consent is allowed, but warned, and flagged on the dashboard's data-quality card.
+**Why.** It turns a compliance requirement into a visible workflow the evaluators can click through. It also connects three RFP asks (portals, signatures, protected information) in one coherent story.
+**Trade-off.** Typed e-signature, not a certified vendor. Production uses one, keeping the signed PDF.
+
+## ADR-011: Stress-test against the RFP, and keep an honest held-out set
+
+**Decision.** Build a stress suite from the RFP text (clause audit, evaluator-phrased question corpus, engine/API/data stress, browser stress), fix what fails, and keep a **held-out** question set that the rules are never tuned against.
+**Why.** Tuning the fallback to its own test set produced a meaningless 100%. The held-out 58% is the true number, and it's the clearest justification for spending model tokens on free-text questions. The editable interpretation chips and the deterministic engine make a 58% fallback safe. All automated runs stub the model, so CI and stress runs cost zero tokens. Measuring the real model is a deliberate, opt-in command.

@@ -44,7 +44,7 @@ export interface CaseManager {
 }
 
 export interface Contact {
-  role: "Guardian" | "Probation Officer" | "Judge" | "Attorney";
+  role: "Youth" | "Guardian" | "Probation Officer" | "Judge" | "Attorney";
   name: string;
   phone?: string;
   /** Guardians can opt in to SMS reminders (RFP §V Programmatic). */
@@ -72,6 +72,17 @@ export interface Referral {
   closedDate?: string;
 }
 
+/** A signed form retained in the record (RFP §V: "forms requiring secure signatures that are then retained"). */
+export interface SignedDocument {
+  id: string;
+  title: string;
+  /** Part 2 consent: unlocks sharing of screening results with the treatment provider. */
+  kind: "part2_consent" | "release" | "other";
+  signedBy: string;
+  signedAt: string; // ISO datetime
+  method: "Typed e-signature";
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -82,7 +93,7 @@ export interface Task {
 export interface TimelineEvent {
   id: string;
   date: string; // ISO datetime
-  kind: "stage" | "screening" | "referral" | "note" | "sms" | "task";
+  kind: "stage" | "screening" | "referral" | "note" | "sms" | "task" | "appointment" | "document" | "export";
   text: string;
   /** Who did it. Feeds the audit-log story (RFP §VI.2.3). */
   actor: string;
@@ -105,6 +116,7 @@ export interface Youth {
   tasks: Task[];
   timeline: TimelineEvent[];
   nextAppointment?: string; // ISO datetime
+  documents?: SignedDocument[];
 }
 
 export interface Dataset {

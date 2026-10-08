@@ -37,7 +37,8 @@ export const DATE_RANGES = {
 const keys = <T extends object>(o: T) => Object.keys(o) as [keyof T & string, ...(keyof T & string)[]];
 
 export const ReportSpecSchema = z.object({
-  title: z.string().max(120),
+  // Trim rather than reject: a long title shouldn't waste a model call we already paid for.
+  title: z.string().transform((t) => t.trim().slice(0, 120) || "Report"),
   metric: z.enum(keys(METRICS)),
   group_by: z.enum(keys(GROUP_BYS)).default("none"),
   date_range: z.enum(keys(DATE_RANGES)).default("all"),
