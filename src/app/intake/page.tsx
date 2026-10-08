@@ -14,14 +14,17 @@ export default function Intake() {
   const { addYouth } = useStore();
   const router = useRouter();
   const [step, setStep] = useState<1 | 2>(1);
-  const [f, setF] = useState({ firstName: "", lastInitial: "", age: "15", gender: "Female" as Gender, pathway: "Diversion" as Pathway, guardian: "", phone: "", smsOptIn: true, officer: "" });
+  const [f, setF] = useState({ firstName: "", lastInitial: "", age: "15", gender: "Female" as Gender, pathway: "Diversion" as Pathway, guardian: "", phone: "", smsOptIn: true, officer: "", youthPhone: "", youthSms: true });
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setF((s) => ({ ...s, [k]: e.target.type === "checkbox" ? (e.target as HTMLInputElement).checked : e.target.value }));
 
-  const valid = f.firstName.trim() && f.lastInitial.trim() && f.guardian.trim();
+  // US phone: 10 digits once punctuation is stripped. Empty is allowed (no texts).
+  const phoneOk = (p: string) => !p.trim() || p.replace(/\D/g, "").replace(/^1/, "").length === 10;
+  const valid = f.firstName.trim() && /^[a-z]$/i.test(f.lastInitial.trim()) && f.guardian.trim() && phoneOk(f.phone) && phoneOk(f.youthPhone);
 
   const save = (screening?: Omit<Screening, "id">) => {
     const contacts: Parameters<typeof addYouth>[0]["contacts"] = [{ role: "Guardian", name: f.guardian, phone: f.phone || undefined, smsOptIn: f.smsOptIn && !!f.phone }];
+    if (f.youthPhone) contacts.unshift({ role: "Youth", name: "Self", phone: f.youthPhone, smsOptIn: f.youthSms });
     if (f.officer) contacts.push({ role: f.pathway === "Family Court" ? "Judge" : "Probation Officer", name: f.officer });
     const id = addYouth({
       firstName: f.firstName.trim(), lastInitial: f.lastInitial.trim().charAt(0).toUpperCase(), age: Number(f.age), gender: f.gender, pathway: f.pathway,
@@ -45,12 +48,19 @@ export default function Intake() {
             {field("Referral pathway", <select className={input} value={f.pathway} onChange={set("pathway")}>{PATHWAYS.map((p) => <option key={p}>{p}</option>)}</select>)}
             {f.pathway !== "Diversion" && field(f.pathway === "Family Court" ? "Judge" : "Probation officer", <input className={input} value={f.officer} onChange={set("officer")} />)}
             {field("Parent / guardian name", <input className={input} value={f.guardian} onChange={set("guardian")} />)}
-            {field("Guardian mobile", <input className={input} placeholder="(716) 555-0123" value={f.phone} onChange={set("phone")} />)}
+            {field("Guardian mobile", <input className={input} inputMode="tel" placeholder="(716) 555-0123" value={f.phone} onChange={set("phone")} aria-invalid={!phoneOk(f.phone)} />)}
+            {field("Youth mobile (optional)", <input className={input} inputMode="tel" placeholder="(716) 555-0199" value={f.youthPhone} onChange={set("youthPhone")} aria-invalid={!phoneOk(f.youthPhone)} />)}
+            {(!phoneOk(f.phone) || !phoneOk(f.youthPhone)) && <p className="sm:col-span-2 text-xs text-red-700">Enter a 10-digit US phone number.</p>}
             <label className="sm:col-span-2 flex items-center gap-2 text-sm">
               <input type="checkbox" checked={f.smsOptIn} onChange={set("smsOptIn")} /> Guardian consents to appointment text reminders
             </label>
+            {f.youthPhone && (
+              <label className="sm:col-span-2 flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={f.youthSms} onChange={set("youthSms")} /> Youth consents to appointment text reminders
+              </label>
+            )}
           </div>
-          <div className="mt-5 flex gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             <button className={btn} disabled={!valid} onClick={() => setStep(2)}>Continue to screening →</button>
             <button className={btnSecondary} disabled={!valid} onClick={() => save()}>Save intake, screen later</button>
           </div>

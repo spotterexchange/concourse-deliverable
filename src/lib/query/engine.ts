@@ -31,16 +31,16 @@ function inRange(y: Youth, range: ReportSpec["date_range"], now: number) {
   }
 }
 
-function groupKey(y: Youth, spec: ReportSpec, ds: Dataset): string[] {
+function groupKey(y: Youth, spec: ReportSpec, names: Map<string, string>): string[] {
   switch (spec.group_by) {
     case "provider": {
       const r = latestReferral(y);
       // Youth never referred to treatment have no provider; leave them out of provider comparisons.
-      return r ? [ds.providers.find((p) => p.id === r.providerId)?.name ?? "Unknown"] : [];
+      return r ? [names.get(r.providerId) ?? "Unknown"] : [];
     }
     case "pathway": return [y.pathway];
     case "stage": return [y.stage];
-    case "case_manager": return [ds.caseManagers.find((c) => c.id === y.caseManagerId)?.name ?? "Unassigned"];
+    case "case_manager": return [names.get(y.caseManagerId) ?? "Unassigned"];
     case "risk_level": return [y.riskLevel ?? "Not yet screened"];
     case "gender": return [y.gender];
     case "age_band": return [y.age <= 15 ? "13–15" : y.age <= 17 ? "16–17" : "18–19"];
@@ -90,6 +90,8 @@ export function runReport(spec: ReportSpec, ds: Dataset, now = Date.now()): Repo
     ? ds.providers.find((p) => p.name.toLowerCase().includes(f.provider!.toLowerCase()))?.id
     : undefined;
   const impl = METRIC_IMPL[spec.metric];
+  // A provider the user named but we can't find means "no rows", never "no filter".
+  if (f.provider && !providerId) return { rows: [], unit: impl.unit, totalN: 0 };
 
   const population = ds.youth.filter(
     (y) =>
@@ -103,8 +105,14 @@ export function runReport(spec: ReportSpec, ds: Dataset, now = Date.now()): Repo
       impl.eligible(y),
   );
 
+  const names = new Map([...ds.providers, ...ds.caseManagers].map((x) => [x.id, x.name]));
   const groups = new Map<string, Youth[]>();
-  for (const y of population) for (const k of groupKey(y, spec, ds)) groups.set(k, [...(groups.get(k) ?? []), y]);
+  for (const y of population) {
+    for (const k of groupKey(y, spec, names)) {
+      const g = groups.get(k);
+      if (g) g.push(y); else groups.set(k, [y]);
+    }
+  }
 
   let rows: ReportRow[] = [...groups.entries()].map(([label, ys]) => ({ label, value: impl.value(ys), n: ys.length }));
   rows = spec.group_by === "referral_month"

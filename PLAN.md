@@ -57,15 +57,18 @@ Real SSO/MFA, real SMS, e-signatures, HIPAA hosting/BAAs, and SOC 2. These are p
 
 **Stop rule:** at 50 minutes we record, regardless of what's left. Unfinished items go in the Loom as "next."
 
-## Loom outline (~4–5 min, addressed to Erie County DOH evaluators)
+## Loom outline (~5½ min, addressed to Erie County DOH evaluators)
 
-1. **(20s) The problem in their words.** "You're piloting a coordination program and need to know which interventions work and for whom."
-2. **(90s) A day as a case manager.** Run a new referral → CRAFFT screening flags high risk → referral to provider → appointment reminder.
-3. **(60s) A day as the program supervisor.** Walk the dashboard, then ask the report builder a question live. "No code, no vendor ticket."
-4. **(45s) Trust.** Show the compliance matrix: County owns the data, US-only, County IdP, audit logs, Part 2-aware family portal.
-5. **(30s) Cost + timeline.** Within the $17k / $8k envelope, $49k over 5 years. Live in 30 days, iterate with staff during the pilot.
-6. **(15s) What's next.** List what's deliberately not built yet.
+The full script, ordered by the County's scoring weights, is in [`docs/LOOM_SCRIPT.md`](docs/LOOM_SCRIPT.md).
 
-## Open questions for Mike
-- Do you have a Claude API key for the deployed report builder, or should we fall back to a canned/rules-based parser for the demo?
-- Deploy to Vercel (bonus), or keep it local + Loom?
+1. **(20s) The problem in their words.** Track every youth from referral to outcome; learn which providers work.
+2. **(60s) The supervisor's morning.** Dashboard, the Northgate finding, provider outcomes, the data-quality checks.
+3. **(75s) A new referral.** Intake with youth and guardian phones → CRAFFT → note, appointment, referral → a reminder that never names the provider.
+4. **(50s) Consent unlocks sharing.** The provider portal hides screening → the guardian signs Part 2 consent → the provider sees it; the signed form is retained.
+5. **(55s) Reports without a vendor ticket.** Preset plus one typed question; the AI reads the question, never the records; edit a chip; export CSV.
+6. **(45s) Trust.** Requirement matrix, one-click County data export, "we stress-tested this against your RFP."
+7. **(25s) Cost + timeline.** $49k over 5 years, no per-seat fees, free data extraction; live in 6 weeks.
+
+## Open questions for Mike (resolved)
+- Model provider: Cerebras `gpt-oss-120b` (free tier), with a keyword-rules fallback and a daily call cap.
+- Deployment: Vercel, https://concourse-deliverable-personal-c635.vercel.app

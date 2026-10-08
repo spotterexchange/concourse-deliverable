@@ -7,6 +7,7 @@ import { Card, Loading, PageHeader, StatTile } from "@/components/ui";
 import { formatValue, runReport } from "@/lib/query/engine";
 import { isOverdue, useStore, youthName } from "@/lib/store";
 import { CLOSED_STAGES, STAGES } from "@/lib/types";
+import { qualityChecks } from "@/lib/quality";
 
 // Supervisor landing page. RFP §V Operational asks for "a dashboard … to provide an
 // overview of case load, status, tasks, and outcomes". Every number here is a
@@ -53,7 +54,8 @@ export default function Dashboard() {
     });
 
     const appts = open.filter((y) => y.nextAppointment).sort((a, b) => a.nextAppointment!.localeCompare(b.nextAppointment!)).slice(0, 6);
-    return { open, overdue, completion, days, pipeline, providers, insight, caseload, appts };
+    const quality = qualityChecks(data);
+    return { open, overdue, completion, days, pipeline, providers, insight, caseload, appts, quality };
   }, [data]);
 
   if (!data || !view) return <Loading />;
@@ -76,7 +78,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="grid lg:grid-cols-5 gap-4 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-4">
         <Card title="Provider outcomes" className="lg:col-span-3">
           <div className="overflow-x-auto -mx-4 px-4">
             <table className="w-full text-sm">
@@ -110,7 +112,7 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Card title="Caseload by case manager">
           <table className="w-full text-sm tabular-nums">
             <thead className="text-xs text-ink-2 text-left">
@@ -149,6 +151,26 @@ export default function Dashboard() {
           </ul>
         </Card>
       </div>
+
+      <Card title={`Data quality (${view.quality.reduce((n, c) => n + c.youth.length, 0)} records to review)`} className="mt-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {view.quality.map((c) => (
+            <div key={c.id} className="rounded-md border border-line p-3">
+              <div className="flex items-baseline justify-between gap-2">
+                <div className="text-sm font-medium">{c.label}</div>
+                <div className={`text-lg font-semibold tabular-nums ${c.youth.length ? "text-amber-800" : "text-green-800"}`}>{c.youth.length}</div>
+              </div>
+              <p className="text-xs text-ink-3 mt-1">{c.why}</p>
+              {c.youth.length > 0 && (
+                <div className="text-xs mt-2 flex flex-wrap gap-x-2">
+                  {c.youth.slice(0, 4).map((y) => <Link key={y.id} href={`/youth/${y.id}`} className="underline">{youthName(y)}</Link>)}
+                  {c.youth.length > 4 && <span className="text-ink-3">+{c.youth.length - 4} more</span>}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Card>
     </>
   );
 }

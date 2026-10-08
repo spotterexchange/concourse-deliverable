@@ -47,3 +47,10 @@ export const SCREENING_LIBRARY = [
   { name: "GAD-7", ages: "12+", purpose: "Anxiety", status: "Configurable form" },
   { name: "ACE-Q Teen", ages: "13–19", purpose: "Adverse childhood experiences", status: "Configurable form" },
 ];
+
+/** Keep only answers to questions that were actually asked, so a saved record
+ *  never shows Part B answers left over from before Part A changed to all "no". */
+export function cleanAnswers(answers: Record<string, boolean>): Record<string, boolean> {
+  const asked: string[] = [...CRAFFT_PART_A, ...partBQuestions(answers)].map((q) => q.id);
+  return Object.fromEntries(Object.entries(answers).filter(([id]) => asked.includes(id)));
+}

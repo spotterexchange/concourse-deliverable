@@ -46,12 +46,18 @@ flowchart LR
 | `src/lib/query/engine.ts` | Deterministic metric definitions and aggregation. The dashboard *and* the report builder both call it |
 | `src/lib/query/rules.ts` | Keyword parser: fallback when the model is unavailable |
 | `src/app/api/report/route.ts` | Model call with caching, rate limiting, timeout and validation |
+| `src/lib/query/budget.ts` | Per-minute and daily model-call caps (token spend guard) |
+| `src/lib/quality.ts` | Data-quality checks shown on the dashboard (RFP "quality assurance measures") |
+| `src/lib/consent.ts` | Part 2 consent lookup that gates the provider portal |
+| `src/lib/export.ts` | Full JSON export and audit-log CSV (County data ownership) |
 | `src/lib/traceability.ts` | RFP requirement → status → answer. Rendered on `/security` |
+| `tests/` · `scripts/e2e.mjs` | Unit and stress tests (S1–S7) and the 36-check browser stress suite. See `docs/STRESS_TEST.md` |
 
 ## Data model
 
 ```
-Youth ─┬─ contacts[]   (Guardian w/ SMS opt-in, Probation Officer, Judge)
+Youth ─┬─ contacts[]   (Youth & Guardian w/ SMS opt-in, Probation Officer, Judge)
+       ├─ documents[]  (signed forms: Part 2 consent; typed e-signature, timestamp)
        ├─ screenings[] (tool, raw answers, score, risk)   ← answers kept so a score is auditable
        ├─ referrals[]  (provider, referred, first appt, status, closed)
        ├─ tasks[]
@@ -76,10 +82,22 @@ Every result carries `n`. The UI shows it, and the dashboard hides provider rate
 
 **Intake → outcome.** Intake form → CRAFFT (live score) → `addYouth` → profile shows the next step for the current stage (refer → mark first appointment → complete/discharge). Every click appends a timeline event and updates the dashboard immediately, because both read the same store.
 
+**Who sees what (role views).**
+
+| Field | Staff | Family portal | Provider portal |
+|---|---|---|---|
+| Appointments | ✓ | ✓ | ✓ (own referrals only) |
+| Screening score / risk | ✓ | — | only after **Part 2 consent** is signed |
+| Screening answers, case notes, tasks | ✓ | — | — |
+| Court / probation / attorney | ✓ | — | — |
+| Consent form to sign | — | ✓ | — |
+
+The demo renders these views client-side. In production the same matrix is enforced server-side with row-level security, and the County edits it as configuration.
+
 **Ask a report.**
 1. Preset question? It uses the stored spec (0 tokens).
 2. Asked before in this browser? It uses the localStorage cache (0 tokens).
-3. Otherwise → `POST /api/report` → server cache → model → zod validation → or rules fallback.
+3. Otherwise → `POST /api/report` → input validation → server cache → **budget check** (`budget.ts`) → model → zod validation → or rules fallback.
 4. The spec is shown back as **editable chips** (measure, grouping, time, filters). A misread question is visible and fixable in one click, which matters more than a perfect parse.
 
 ## Production path (what changes after award)

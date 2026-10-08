@@ -177,6 +177,9 @@ export function generateDataset(now = Date.now()): Dataset {
     const contacts: Youth["contacts"] = [
       { role: "Guardian", name: `${pick(GUARDIAN_FIRST)} ${guardianLast}.`, phone: `(716) 555-01${between(10, 99)}`, smsOptIn: chance(0.8) },
     ];
+    const age = between(13, 19);
+    // Older youth often have their own phone; the RFP asks for reminders to youth *and* families.
+    if (age >= 15 && chance(0.6)) contacts.unshift({ role: "Youth", name: "Self", phone: `(716) 555-03${between(10, 99)}`, smsOptIn: chance(0.7) });
     if (pathway === "Probation") contacts.push({ role: "Probation Officer", name: pick(POS), phone: `(716) 555-02${between(10, 99)}` });
     if (pathway === "Family Court") contacts.push({ role: "Judge", name: pick(JUDGES) });
 
@@ -184,7 +187,7 @@ export function generateDataset(now = Date.now()): Dataset {
       id: `Y-${1001 + i}`,
       firstName: pick(FIRST),
       lastInitial: pick(LAST_INITIALS.split("")),
-      age: between(13, 19),
+      age,
       gender,
       pathway,
       stage,
@@ -196,6 +199,10 @@ export function generateDataset(now = Date.now()): Dataset {
       referrals,
       tasks,
       timeline: timeline.reverse(), // newest first
+      // Youth who reached treatment signed Part 2 consent at referral (sharing with the provider requires it).
+      documents: referrals.length && chance(0.85)
+        ? [{ id: id("d"), title: "Consent to share SUD information (42 CFR Part 2)", kind: "part2_consent" as const, signedBy: contacts.find((c) => c.role === "Guardian")!.name, signedAt: iso(Date.parse(referrals[0].date) - DAY), method: "Typed e-signature" as const }]
+        : [],
       nextAppointment: stage === "In Treatment" ? appointmentAt(now + between(1, 10) * DAY, between(0, 7)) : undefined,
     });
   }

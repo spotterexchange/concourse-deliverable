@@ -2,7 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { generateDataset } from "./seed";
-import type { Dataset, Referral, RiskLevel, Screening, Stage, TimelineEvent, Youth } from "./types";
+import type { Dataset, Referral, RiskLevel, Screening, SignedDocument, Stage, TimelineEvent, Youth } from "./types";
+import { CLOSED_STAGES } from "./types";
 
 // Client-side store (ADR-002). In the demo, case data lives only in this browser's
 // localStorage: there's no server database, so nothing synthetic or real is ever
@@ -10,7 +11,9 @@ import type { Dataset, Referral, RiskLevel, Screening, Stage, TimelineEvent, You
 // an API backed by a US-region Postgres with row-level security. The action
 // names below map 1:1 to the API endpoints that would replace them.
 
-const STORAGE_KEY = "intercept.dataset.v1";
+// v2: adds signed documents and youth contacts; bumping the key gives returning
+// viewers the new seed instead of v1 data without consent records.
+const STORAGE_KEY = "intercept.dataset.v2";
 
 /** The signed-in demo user. Production identity comes from the County IdP (SAML/OIDC). */
 export const CURRENT_USER = { name: "Dana Whitfield", role: "Case Manager", caseManagerId: "cm1" };
@@ -23,6 +26,10 @@ type Ctx = {
   setStage: (youthId: string, stage: Stage, note: string) => void;
   toggleTask: (youthId: string, taskId: string) => void;
   logEvent: (youthId: string, kind: TimelineEvent["kind"], text: string) => void;
+  addNote: (youthId: string, text: string) => void;
+  addTask: (youthId: string, title: string, due: string) => void;
+  scheduleAppointment: (youthId: string, when: string) => void;
+  signDocument: (youthId: string, doc: Omit<SignedDocument, "id" | "signedAt" | "method">) => void;
   reset: () => void;
 };
 
@@ -40,8 +47,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     let loaded: Dataset | null = null;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) loaded = JSON.parse(raw);
-    } catch { /* storage blocked: fall through to a fresh seed */ }
+      const parsed = raw ? JSON.parse(raw) : null;
+      // Only trust stored data that has the expected shape; anything else (an older
+      // demo version, a hand-edited value) is replaced by a fresh seed.
+      if (parsed && Array.isArray(parsed.youth) && Array.isArray(parsed.providers) && Array.isArray(parsed.caseManagers)) loaded = parsed;
+    } catch { /* storage blocked or corrupt: fall through to a fresh seed */ }
     setData(loaded ?? generateDataset());
   }, []);
 
@@ -98,7 +108,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         if (stage === "Discharged") return { ...r, status: "Dropped" as const, closedDate: today() };
         return r;
       });
-      return { ...y, stage, referrals, timeline: [event("stage", note), ...y.timeline] };
+      // Closing a case cancels any upcoming appointment so no reminder goes out.
+      const nextAppointment = CLOSED_STAGES.includes(stage) ? undefined : y.nextAppointment;
+      return { ...y, stage, referrals, nextAppointment, timeline: [event("stage", note), ...y.timeline] };
     }),
     toggleTask: (youthId, taskId) => updateYouth(youthId, (y) => {
       const task = y.tasks.find((t) => t.id === taskId);
@@ -109,6 +121,22 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       };
     }),
     logEvent: (youthId, kind, text) => updateYouth(youthId, (y) => ({ ...y, timeline: [event(kind, text), ...y.timeline] })),
+    addNote: (youthId, text) => updateYouth(youthId, (y) => ({ ...y, timeline: [event("note", text.trim()), ...y.timeline] })),
+    addTask: (youthId, title, due) => updateYouth(youthId, (y) => ({
+      ...y,
+      tasks: [...y.tasks, { id: uid(), title: title.trim(), due, done: false }],
+      timeline: [event("task", `Task added: ${title.trim()} (due ${due})`), ...y.timeline],
+    })),
+    scheduleAppointment: (youthId, when) => updateYouth(youthId, (y) => ({
+      ...y,
+      nextAppointment: new Date(when).toISOString(),
+      timeline: [event("appointment", `Appointment scheduled for ${new Date(when).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}`), ...y.timeline],
+    })),
+    signDocument: (youthId, doc) => updateYouth(youthId, (y) => ({
+      ...y,
+      documents: [...(y.documents ?? []), { ...doc, id: uid(), signedAt: new Date().toISOString(), method: "Typed e-signature" }],
+      timeline: [{ ...event("document", `${doc.title} signed by ${doc.signedBy} (typed e-signature, retained in record)`), actor: doc.signedBy }, ...y.timeline],
+    })),
     reset: () => {
       try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
       setData(generateDataset());
@@ -127,3 +155,4 @@ export function useStore() {
 /** Small derived helpers shared by pages. */
 export const youthName = (y: Youth) => `${y.firstName} ${y.lastInitial}.`;
 export const isOverdue = (due: string) => due < today();
+export { hasPart2Consent } from "./consent";

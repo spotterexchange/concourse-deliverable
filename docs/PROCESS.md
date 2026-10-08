@@ -35,13 +35,27 @@ Claude Code wrote the code from the plan, in this order:
 | Scaffolding copied create-next-app's own `.git` over the repo's | Caught before pushing; restored from a fresh clone instead of hand-editing git config. Lesson: scaffold in place or exclude `.git` |
 | Where to stop | No auth, no DB, no form builder. Each is real work with no new product insight. Listed as "production path" instead |
 
-## 5. Where we stopped
+## 5. Stress test (second pass)
 
-Done: every flow in `PLAN.md`'s must-have list plus the family portal, SMS reminder and compliance page.
+Asked to stress-test against the RFP, I directed a four-layer suite (`docs/STRESS_TEST.md`):
+1. A clause-by-clause RFP audit.
+2. An evaluator-phrased question corpus, plus a held-out set.
+3. Engine, API and data abuse tests.
+4. A 36-check browser run at phone and desktop widths.
+
+The baseline failed 7 of 14 automated checks and showed 9 RFP clauses with no answer in the product. Fixes included: a wrong-number bug with an unknown provider filter, stale CRAFFT answers, a scale bug, mobile overflow, reminders on closed cases, and a daily token cap. The missing clauses were case notes and tasks, appointments, a consent-gated provider portal, retained signatures, youth reminders, QA checks, data and audit export, and an implementation timeline.
+
+**Judgment call:** after tuning, the keyword fallback hit 100% on its own corpus but 58% on held-out questions. I kept that number rather than tuning it away. It's the honest case for the model, and it's why the UI shows its interpretation.
+
+**Token spend for the whole pass: zero.** The model is stubbed in tests, and the browser run uses presets.
+
+## 6. Where we stopped
+
+Done: every flow in `PLAN.md`'s must-have list, the family and provider portals, signed consent, reminders, data-quality checks, exports, and the compliance page, all passing the stress suite.
 
 Next, if this were real:
 1. A discovery call with DOH program staff to confirm the stage model and outcome definitions.
 2. A form builder (GAIN-SS / PHQ-A as configuration).
 3. County IdP federation.
 4. Postgres with row-level security.
-5. A provider-facing view.
+5. Run `npm run eval:model` once a week on the deployed URL to track model accuracy on the corpus.

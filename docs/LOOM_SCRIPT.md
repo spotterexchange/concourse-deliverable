@@ -1,36 +1,47 @@
-# Loom script (~5 min) for Erie County Department of Health evaluators
+# Loom script (~5½ min) for Erie County Department of Health evaluators
 
-**Before recording:** open the deployed URL and click **Reset demo data** (sidebar).
+**Before recording:**
+- Open https://concourse-deliverable-personal-c635.vercel.app in a fresh private window, or click **Reset demo data** in the sidebar.
+- Have one typed question ready for "Ask a report". Presets don't call the model; a typed question shows the AI interpreting it.
+- The beats follow the County's own scoring weights: Programmatic 30%, Technical 25%, Operational / Administrative / Financial 15% each.
 
 ---
 
 **0:00 · The problem, in your words (20s)**
-> "You're piloting the Juvenile Substance Use Services Coordination Program. You need to track every youth from referral to outcome, and you need to know which treatment providers are actually working, so the County can make systems-level decisions. You have $17,000 to start. Here's what we'd give you."
+> "You're piloting the Juvenile Substance Use Services Coordination Program. You need every youth tracked from referral to outcome, and you need to know which treatment providers are actually working, so the County can make systems-level decisions. You have $17,000 to start. Here's what we'd give you."
 
-**0:20 · The supervisor's morning (60s) · Dashboard**
-- Active youth, overdue tasks, completion rate, days to first appointment.
-- **Point at the amber callout.** "Northgate averages about 27 days to a first appointment, against about 11 days program-wide. That's the kind of finding the RFP says this system exists to produce."
-- Provider outcomes table: "Engagement, wait and completion for every provider, with definitions on the page. Small samples are hidden so nobody makes a decision off one case."
+**0:20 · The supervisor's morning (60s) · Dashboard** *(Operational)*
+- Tiles: active youth, overdue tasks, completion rate, days to first appointment.
+- **Point at the amber callout.** "Northgate takes more than twice as long as the program average to get a youth to a first appointment, and engages far fewer of them. That's the systems-level finding this RFP exists to produce."
+- Provider outcomes table: "Definitions are on the page. Small samples are hidden so nobody acts on one case."
+- **Scroll to Data quality.** "These are your quality-assurance checks. Who hasn't been screened, which referrals have stalled, who's in treatment with no appointment, who's missing consent. Every number above is only as good as this list."
 
-**1:20 · A new referral (90s) · New intake → CRAFFT → profile**
-- Enter a youth on the Diversion pathway, with guardian SMS consent.
-- Run CRAFFT 2.1 live. "It's validated for ages 12 to 21. Skip logic and scoring are built in. A score of 2 or more flags for treatment referral."
-- On the profile: "The next step is always one obvious action." Refer to Kestrel Family Therapy.
-- Show the **audit trail**: every action timestamped and attributed.
-- **Send text reminder.** "Notice the message never names the provider. A text can be read by anyone with the phone, and substance-use treatment is protected under 42 CFR Part 2."
-- **Family portal preview:** "Families see appointments and consent forms. Screening answers, court details and clinical notes are hidden."
+**1:20 · A new referral (75s) · New intake → CRAFFT → profile** *(Programmatic)*
+- Intake: Diversion pathway, guardian mobile, **youth mobile**, both opted in to texts. "Bad phone numbers are caught at the door."
+- Run CRAFFT 2.1 live. "Validated for ages 12 to 21. Skip logic and scoring are built in, and a score of 2 or more flags for referral. Answers to questions that weren't asked are never saved."
+- On the profile: add a **case note**, **schedule an appointment**, **refer to Kestrel**. Point out the warning: *"Part 2 consent isn't signed yet."*
+- **Send text reminder.** "It goes to the youth *and* the guardian, and it never names the provider. A text can be read by anyone holding the phone."
 
-**2:50 · Reports without a vendor ticket (60s) · Ask a report**
+**2:35 · Consent unlocks sharing (50s) · Portals** *(Programmatic: portals and signatures)*
+- Click **Provider portal**. "This is what Kestrel sees: their referral and the appointment. Screening is hidden because there's no Part 2 consent. Court details and case notes are never shown."
+- Click **Family portal**. "The guardian sees logistics and the consent form. No scores, no court details." Sign with a typed name.
+- Back to **Provider portal**. "Now the screening result appears." Back to **Staff view**: "The signed form is retained in the record and the audit trail."
+
+**3:25 · Reports without a vendor ticket (55s) · Ask a report** *(Operational)*
 - Click the preset *"Are diversion youth more likely to complete than probation youth?"*
-- Type: *"how long do high-risk youth wait for treatment by provider"*.
-- "The AI only turns your question into a report definition. You can see exactly how it read you, and change any part. The numbers are computed by the same engine as the dashboard. **The AI never sees a single youth record.**" Export the CSV.
+- Type your prepared question, e.g. *"Do girls on probation finish treatment less often than boys?"*
+- "The AI only turns your question into a report definition. You can see exactly how it read you, and change any part. The numbers come from the same engine as the dashboard, and **the AI never sees a youth record**. If the AI is unavailable, it still works."
+- Change one chip, then **Download CSV**.
 
-**3:50 · Trust (40s) · Security & compliance**
-- "Every requirement from Sections V and VI, marked honestly: working in this demo, simulated, or a production commitment. County IdP for sign-in with MFA, US-only hosting, AES-256, one-year audit logs, data returned and deleted on exit. The data is the County's."
+**4:20 · Trust (45s) · Security & compliance** *(Technical / Administrative)*
+- "Every requirement from Sections V and VI, marked honestly: working in this demo, simulated, or a production commitment."
+- "County IdP for sign-in with MFA, US-only hosting, AES-256, one-year audit logs."
+- Click **Export all County data**. "Your data, any time, no ticket, no fee."
+- "We stress-tested this against your RFP before sending it. That's on the record too: what broke and what we fixed."
 
-**4:30 · Cost and timeline (30s)**
-- "$17,000 in year one including setup and training, $8,000 a year after. That's $49,000 over five years, with no per-seat fees, so providers and families are included."
-- "Live in about 30 days. Then we sit with your case managers during the pilot and change the forms and reports as the program learns. That's the point of a customizable platform."
+**5:05 · Cost and timeline (25s)** *(Financial / Administrative)*
+- "$17,000 in year one including setup and training, then $8,000 a year. $49,000 over five years. No per-seat fees, so providers and families are included, and data extraction is free."
+- "Live in six weeks. The plan on screen shows what we need from your team at each step."
 
-**5:00 · Close**
-> "This demo was built in about an hour. Imagine what we build with your team."
+**5:30 · Close**
+> "Built in about an hour, and tested against your requirements. Imagine what we build with your team."
