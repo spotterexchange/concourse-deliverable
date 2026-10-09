@@ -1,195 +1,140 @@
-# Loom script: read-aloud version with click-through
+# Loom outline (target 5:30, hard stop 6:00)
 
-**Audience:** Erie County Department of Health evaluators. You're a vendor submitting your RFP response, so talk to them, not to Concourse.
-**Length:** about 5½ minutes, roughly 750 spoken words.
-
-**How to read this:**
-- **▶ CLICK** lines are actions. Do them, don't say them.
-- Quoted blocks are what you say, word for word.
-- *(Pause)* means let the screen catch up before you keep talking.
+**Audience:** Erie County DOH evaluators. You're the vendor, so talk to the buyer, not to Concourse.
+**Format:** each section has a **clock checkpoint**, the **clicks**, and **talking points**. Speak to the points in your own words.
 
 ---
 
-## Setup checklist (before you hit record)
+## Before you record
 
-- [ ] Open **https://concourse-deliverable-personal-c635.vercel.app** in a **new private/incognito window**, so you get clean demo data.
-- [ ] Browser zoom at **100%**, window about 1400px wide. Close other tabs and silence notifications.
-- [ ] Do one dry run of Part 3 off-camera, then click **Reset demo data** (bottom of the left sidebar) and confirm.
-- [ ] Loom: **Screen + Camera**, recording this browser window.
-- [ ] Have these ready to paste or type:
-  - Youth: **Ana** · Last initial **R** · Age **15** · Pathway **Diversion**
-  - Guardian: **Rosa Rivera** · Guardian mobile **(716) 555-0142** · Youth mobile **(716) 555-0177**
-  - Report question: **Do girls on probation finish treatment less often than boys?**
-
----
-
-## Part 1 · Opening (≈ 20 sec)
-
-**▶ CLICK:** Start on the **Dashboard** (the default page). Don't scroll yet.
-
-> "Hi, I'm Mike. This is our response to Erie County's RFP for a Juvenile Justice Services Case Management Platform.
->
-> You're running the Juvenile Substance Use Services Coordination Program. You need to follow every young person from referral to outcome, and you need to know which treatment providers are actually working, so you can make better decisions for the whole system. And you have seventeen thousand dollars to start.
->
-> So let me show you what we'd give you. Everything you'll see is working software with made-up data."
+- Open **https://concourse-deliverable-personal-c635.vercel.app** in a **private window**. Zoom 100%, about 1400px wide, notifications off.
+- Do a dry run of section 3, then click **Reset demo data** (bottom of the sidebar).
+- Loom: **Screen + Camera**.
+- Keep handy:
+  - **Youth:** Ana R. · 15 · Diversion
+  - **Guardian:** Rosa Rivera · (716) 555-0142
+  - **Youth phone:** (716) 555-0177
+  - **Report question:** *"Do girls on probation finish treatment less often than boys?"*
 
 ---
 
-## Part 2 · The supervisor's morning (≈ 60 sec)
+## 1 · Opening · 0:00 → 0:20
 
-**▶ CLICK:** Nothing. Point your cursor at the four tiles across the top.
+**Screen:** Dashboard (no clicks)
 
-> "This is what a program supervisor sees first thing: how many youth are active, how many tasks are overdue, how often cases end in completion, and how long it takes a young person to get from referral to their first treatment appointment."
+- Who you are; responding to the Erie County Juvenile Justice Case Management RFP
+- *Their* problem: track every youth from referral to outcome, and learn **which providers actually work**
+- Budget hook: "$17,000 to start." Everything shown is working software with fake data.
 
-**▶ CLICK:** Move your cursor to the **amber "Worth a look" box**.
+## 2 · Supervisor's morning · 0:20 → 1:20
 
-> "And the system tells you where to look. Here, Northgate Teen Outpatient takes more than twice as long as the program average to get a youth to a first appointment, and fewer of those youth ever show up. That's exactly the kind of systems-level finding this RFP is asking for."
+**Clicks:**
+1. Hover the **4 tiles**
+2. Hover the amber **"Worth a look"** box
+3. Hover the **Provider outcomes** table
+4. Scroll to **Data quality**
 
-**▶ CLICK:** Move your cursor over the **Provider outcomes** table.
+**Talking points:**
+- Tiles: active youth, overdue tasks, completion rate, days to first appointment
+- **Northgate takes 2× longer and engages fewer.** "That's the systems-level finding the RFP asks for."
+- Providers side by side; definitions on the page; rates hidden under 3 cases
+- Data quality = the RFP's quality-assurance ask: "the numbers are only as good as this list"
 
-> "Every provider, side by side: referrals, engagement, wait time, completion. The definitions are right on the page, and we hide any rate built on fewer than three cases, so nobody makes a decision off one kid."
+> ⏱ **If you're past 1:30, skip the provider table.**
 
-**▶ CLICK:** Scroll down to the **Data quality** card at the bottom.
+## 3 · A new referral · 1:20 → 2:35
 
-> "And this is quality assurance. Who hasn't been screened, which referrals have stalled, who's in treatment with no appointment booked, who's missing a signed consent. Every number above is only as good as this list, so we put it on the same screen."
+**Clicks:**
+1. **New intake** → fill in Ana's details plus the guardian and youth phones → keep both text boxes checked → **Continue to screening →**
+2. CRAFFT: Part A **Yes** on alcohol → Part B **Yes** on **R** and **F** → **Save intake & screening**
+3. Profile:
+   - **Add note** ("prefers afternoon appointments")
+   - **Next appointment**: pick a date at about 3:30 PM → **Schedule**
+   - **Next step**: choose **Kestrel Family Therapy** → **Send referral**
+4. **Contacts** → **Send text reminder**
 
----
+**Talking points:**
+- Separate text consent for youth and guardian; bad numbers are caught at entry
+- CRAFFT is a validated screener for ages 12–21; scoring is built in; **2 or more = high risk**
+- One clear next step; every action is time-stamped and attributed in the **audit trail**
+- **The text never names the provider.** Anyone can read a phone, and substance-use treatment is federally protected.
 
-## Part 3 · A new referral (≈ 75 sec)
+> ⏱ **If you're running long, skip the note and the appointment, and go straight to the referral.**
 
-**▶ CLICK:** **New intake** in the left sidebar.
+## 4 · Consent unlocks sharing · 2:35 → 3:25 ⭐ *the key moment, don't rush it*
 
-> "Now let's be a case manager. A new young person comes in through diversion."
+**Clicks:**
+1. **Provider portal** tab
+2. **Family portal** tab → tick the agree box → type "Rosa Rivera" → **Sign**
+3. **Provider portal** again
+4. **Staff view** → **Signed documents**
 
-**▶ CLICK:** Fill in:
-- **First name:** `Ana`
-- **Last initial:** `R`
-- **Age:** `15`
-- **Referral pathway:** `Diversion`
-- **Parent / guardian name:** `Rosa Rivera`
-- **Guardian mobile:** `(716) 555-0142`
-- **Youth mobile (optional):** `(716) 555-0177`
+**Talking points:**
+- The provider sees the referral and appointment; **screening is hidden without consent**. Court details and notes are never shown.
+- The family sees appointments and the consent form only
+- After signing → **the provider now sees the screening**
+- The signed form is kept in the record and the audit trail
 
-Leave both text-reminder boxes **checked**.
+## 5 · Reports without a ticket · 3:25 → 4:20
 
-> "We take a phone number for the guardian and for the youth, each with their own consent to text reminders. A bad phone number gets caught right here."
+**Clicks:**
+1. **Ask a report**
+2. Click the suggestion *"Are diversion youth more likely…"*
+3. Type your question → **Ask** (wait for "Interpreted by AI")
+4. Change the **Grouped by** chip → **Download CSV**
 
-**▶ CLICK:** **Continue to screening →**
+**Talking points:**
+- Leadership asks unplanned questions; there's no developer or ticket needed
+- **The AI only works out what you're asking. It never sees a youth record.**
+- The interpretation is visible and fixable in one click
+- Same calculations as the dashboard; still works if the AI is down
 
-> "Next is the CRAFFT, a validated substance-use screening for ages twelve to twenty-one."
+## 6 · Trust · 4:20 → 5:05
 
-**▶ CLICK:** Part A: **Yes** on the first question (alcohol). **No** on the other two. *(Part B appears.)*
-**▶ CLICK:** Part B: **Yes** on **R** (relax) and **Yes** on **F** (family/friends). **No** on the rest.
+**Clicks:**
+1. **Security & compliance** → scroll the table slowly
+2. **Your data** → **Export all County data (JSON)**
 
-> "The scoring and skip logic are built in. A score of two or more means this young person needs a closer look, so it's flagged high risk."
+**Talking points:**
+- Every Section V and VI requirement, labelled honestly: **working / simulated / production commitment**
+- County SSO with MFA, US-only data, encryption, a year of audit logs
+- "Your data, any time, no ticket, no fee."
+- "We stress-tested this against your RFP before sending it."
 
-**▶ CLICK:** **Save intake & screening**. *(You land on Ana's profile.)*
+## 7 · Cost + timeline · 5:05 → 5:30
 
-> "Ana now has a record, and the system gives the case manager one clear next step."
+**Clicks:** scroll to the **Cost** table and the **Implementation timeline**
 
-**▶ CLICK:** In **Case notes & audit trail**, type `Prefers afternoon appointments after school.` then click **Add note**.
-**▶ CLICK:** In **Next appointment** (right column), pick a date a few days out at about **3:30 PM**, then click **Schedule**.
-**▶ CLICK:** In the **Next step** box, open the provider dropdown, choose **Kestrel Family Therapy**, then click **Send referral**.
+**Talking points:**
+- **$17k in year 1, then $8k a year = $49k over 5 years**
+- No per-user fees, so providers and families are included; data extraction is free
+- **Live in 6 weeks**; the plan shows what we need from the County at each step
 
-> "I've added a note, booked an appointment, and sent the referral to Kestrel. Every one of those actions is time-stamped with who did it, down here in the audit trail."
+## 8 · Close · 5:30 → 5:40
 
-**▶ CLICK:** Scroll the right column to **Contacts** and click **Send text reminder**.
+**Click:** **Dashboard**, then look at the camera.
 
-> "One click reminds both Ana and her mom. Notice what the text *doesn't* say: it never names the provider or the kind of treatment. Anyone can pick up a phone, and substance-use treatment is protected under federal law."
-
----
-
-## Part 4 · Consent unlocks sharing (≈ 50 sec)
-
-**▶ CLICK:** The **Provider portal** tab (top right of Ana's profile).
-
-> "Here's what Kestrel sees in their own portal. Ana's referral and her appointment, but her screening results are hidden, because her guardian hasn't signed consent yet. Court details and case notes are never shown to providers at all."
-
-**▶ CLICK:** The **Family portal** tab.
-
-> "Here's what Ana's mom sees. Her appointment and a consent form. No scores, no court details."
-
-**▶ CLICK:** Tick **"I have read and agree to this consent"**, type `Rosa Rivera` in the signature box, and click **Sign**.
-
-> "She reads it and signs, right from her phone."
-
-**▶ CLICK:** The **Provider portal** tab again.
-
-> "And now Kestrel can see the screening result, because there's consent on file."
-
-**▶ CLICK:** The **Staff view** tab, then scroll the right column to **Signed documents**.
-
-> "The signed form is kept in Ana's record, and the signature is in the audit trail."
-
----
-
-## Part 5 · Reports without a vendor ticket (≈ 55 sec)
-
-**▶ CLICK:** **Ask a report** in the left sidebar.
-
-> "Every program gets questions from leadership that nobody planned a report for. You shouldn't need a developer or a support ticket to answer them."
-
-**▶ CLICK:** The suggestion **"Are diversion youth more likely to complete than probation youth?"**
-
-> "You can click a common question…"
-
-**▶ CLICK:** In the question box, type `Do girls on probation finish treatment less often than boys?` and click **Ask**. *(Wait 1–2 seconds; the grey line reads "Interpreted by AI".)*
-
-> "…or just ask your own, in plain English.
->
-> Here's the important part. The AI only works out *what you're asking*. It never sees a single youth's record. You can see exactly how it understood you, right here."
-
-**▶ CLICK:** Move your cursor along the grey chips (Measure, Grouped by, filters). Then change **Grouped by** to **Entry pathway**.
-
-> "If it read you wrong, change it with one click. The numbers come from the same calculations as the dashboard, so they always agree. And if the AI is ever unavailable, reporting still works."
-
-**▶ CLICK:** **Download CSV**.
-
-> "And you can take any report with you."
+- "Built in about an hour, tested against your requirements. Imagine what we'll build with your team."
 
 ---
 
-## Part 6 · Trust (≈ 45 sec)
+## Time management
 
-**▶ CLICK:** **Security & compliance** in the left sidebar. Slowly scroll the requirements table.
+| If at… | You're past | Then |
+|---|---|---|
+| **1:30** | section 2 | Skip the provider table |
+| **2:45** | section 3 | Skip the note and appointment; just refer and send the text |
+| **4:30** | section 5 | Skip the chip edit and the CSV |
+| **5:15** | section 6 | Say the cost line in one sentence and close |
 
-> "Every requirement from Sections Five and Six of your RFP, and an honest label for each: working in this demo, simulated, or a commitment for production. Sign-in through the County's own system with multi-factor authentication. All data stored only in the United States. Encryption. A year of audit logs."
+**Never cut section 4 (consent).** It's the strongest moment.
 
-**▶ CLICK:** Scroll down to **Your data** and click **Export all County data (JSON)**.
-
-> "And the data is yours. You can take a complete copy at any time: no ticket, no fee.
->
-> We also stress-tested this demo against your RFP before sending it. What broke and what we fixed is all documented."
-
----
-
-## Part 7 · Cost and timeline (≈ 25 sec)
-
-**▶ CLICK:** Scroll to the **Cost** table and the **Implementation timeline** on the same page.
-
-> "Seventeen thousand dollars in year one, including setup and training. Then eight thousand a year. That's forty-nine thousand over five years. There are no per-user fees, so providers and families are included, and getting your data out is free.
->
-> We'd be live in six weeks, and this plan shows exactly what we'd need from your team at each step."
-
----
-
-## Part 8 · Close (≈ 10 sec)
-
-**▶ CLICK:** **Dashboard** in the left sidebar. Look at the camera.
-
-> "This was built in about an hour and tested against your requirements. Imagine what we'll build together with your team. Thank you."
-
-**▶ Stop recording.**
-
----
-
-## If something goes sideways
+## If something goes wrong
 
 | What you see | What to do |
 |---|---|
-| **Send referral** is greyed out | Pick a provider in the dropdown first |
+| **Send referral** is greyed out | Pick a provider first |
 | **Sign** is greyed out | Tick the agree box *and* type a name |
-| Risk shows "Moderate", not "High" | You need a Yes in Part A plus at least **two** Yes answers in Part B. Say "let's adjust that" and fix it, it's fine |
-| Ask a report says **"keyword rules · No model key configured"** | Keep going and say "if the AI is unavailable, reporting still works." Afterwards, check `CEREBRAS_API_KEY` in Vercel and redeploy |
-| Numbers differ slightly from this script | Expected. The demo data is dated relative to today. The Northgate story stays the same |
-| You stumble | Keep going. One natural take beats a polished one; Concourse cares about judgment, not polish |
+| Risk shows "Moderate" | You need Part A Yes plus 2+ Part B Yes answers; fix it on camera, that's fine |
+| "keyword rules · No model key" | Say "even if the AI is unavailable, reporting still works" and move on |
+| Numbers differ from these notes | Expected: the demo data is dated relative to today |
