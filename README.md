@@ -48,4 +48,4 @@ AI report interpretation is optional. Copy `.env.example` to `.env.local` and se
 - [`docs/STRESS_TEST.md`](docs/STRESS_TEST.md): stress test against the RFP, with before/after results and the defects it caught
 - [`docs/PROCESS.md`](docs/PROCESS.md): how the build was directed with AI, and where we stopped
 - [`docs/LOOM_SCRIPT.md`](docs/LOOM_SCRIPT.md): timed Loom outline for recording
-- [`docs/LOOM_SCRIPT_VERBATIM.md`](docs/LOOM_SCRIPT_VERBATIM.md): word-for-word version for practice runs
+- [`docs/LOOM_SCRIPT_VERBATIM.md`](docs/LOOM_SCRIPT_VERBATIM.md): run-through copy with bulleted talking points and every click and input
