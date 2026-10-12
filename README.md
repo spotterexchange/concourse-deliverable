@@ -4,6 +4,14 @@ A working demo built in response to **Erie County, NY RFP #2026-052VF: Juvenile 
 
 > All people, providers and records are **synthetic**. Case data never leaves the browser.
 
+**Live demo:** https://concourse-deliverable-personal-c635.vercel.app
+**Walkthrough video (Loom):** _add link_
+
+**Where to look first**
+- [`PLAN.md`](PLAN.md): how the RFP was chosen and scoped
+- [`docs/PROCESS.md`](docs/PROCESS.md): how the build was directed with AI, the judgment calls, and where it stopped
+- [`docs/STRESS_TEST.md`](docs/STRESS_TEST.md): testing the build against the RFP, with what broke and what was fixed
+
 ![Dashboard](docs/screenshots/dashboard.png)
 
 ## What it does
@@ -34,7 +42,7 @@ AI report interpretation is optional. Copy `.env.example` to `.env.local` and se
 
 ## Deploy (Vercel)
 
-1. Vercel → **Add New Project** → import `spotterexchange/concourse-deliverable`. The framework is auto-detected and needs no build settings.
+1. Vercel → **Add New Project** → import this repository. `vercel.json` pins the Next.js framework, so no build settings are needed.
 2. *(Optional)* Under **Settings → Environment Variables**, add `CEREBRAS_API_KEY`.
 3. Deploy. Functions are pinned to `iad1` (US East) in `vercel.json`.
 
@@ -46,4 +54,3 @@ AI report interpretation is optional. Copy `.env.example` to `.env.local` and se
 - [`docs/RFP_TRACEABILITY.md`](docs/RFP_TRACEABILITY.md): requirement → feature mapping
 - [`docs/STRESS_TEST.md`](docs/STRESS_TEST.md): stress test against the RFP, with before/after results and the defects it caught
 - [`docs/PROCESS.md`](docs/PROCESS.md): how the build was directed with AI, and where we stopped
-- [`docs/LOOM_SCRIPT.md`](docs/LOOM_SCRIPT.md): the buyer-facing walkthrough
