@@ -189,12 +189,12 @@ The full logs are in `docs/PROCESS.md`, `docs/DECISIONS.md` (11 decision records
 3. Prepare **one typed question** for Ask a report, e.g. *"Do girls on probation finish treatment less often than boys?"* Presets don't call the AI. A typed question shows **"Interpreted by AI · gpt-oss-120b"**, which is the moment that proves the AI is real.
 4. Browser at **100% zoom**, about 1400px wide. Close other tabs and turn off notifications.
 5. In Loom, choose **Screen + Camera** (a small camera bubble builds trust with a buyer) and record the browser tab or window.
-6. Keep `docs/LOOM_SCRIPT.md` open on a second screen or printed.
+6. Keep `_private/LOOM_SCRIPT.md` open on a second screen or printed.
 
 ### Framing
 **You are talking to Erie County's evaluation committee, not to Concourse.** Speak their language: youth, case managers, providers, outcomes, consent. Avoid React, APIs and tokens. Follow their scoring weights.
 
-### Script (about 5½ min; full wording in `docs/LOOM_SCRIPT.md`)
+### Script (about 5½ min; full wording in `_private/LOOM_SCRIPT.md`)
 
 | Time | Beat | What to click | Key line |
 |---|---|---|---|
@@ -237,7 +237,7 @@ Send to **sara@concoursetech.com**:
 >
 > Mike
 
-**Check the repo is public, or give Concourse access,** before linking it.
+**Use the link to the new repo on your other GitHub account** (see `_private/README.md`), and check it's public or that Concourse has access.
 
 ---
 
@@ -263,8 +263,8 @@ Send to **sara@concoursetech.com**:
 | Path | What it is |
 |---|---|
 | `PLAN.md` | The original plan: RFP choice, scope, timebox |
-| `docs/CONTEXT.md` | **This file** |
-| `docs/LOOM_SCRIPT.md` | Word-for-word Loom script |
+| `_private/CONTEXT.md` | **This file** |
+| `_private/LOOM_SCRIPT.md` | Word-for-word Loom script |
 | `docs/ARCHITECTURE.md` | System design, data model, who-sees-what matrix, production path |
 | `docs/DECISIONS.md` | 11 decision records (the "why") |
 | `docs/STRESS_TEST.md` | Stress-test method, before/after results, defects found |

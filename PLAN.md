@@ -59,7 +59,7 @@ Real SSO/MFA, real SMS, e-signatures, HIPAA hosting/BAAs, and SOC 2. These are p
 
 ## Loom outline (~5½ min, addressed to Erie County DOH evaluators)
 
-The full script, ordered by the County's scoring weights, is in [`docs/LOOM_SCRIPT.md`](docs/LOOM_SCRIPT.md).
+The walkthrough follows the County's scoring weights.
 
 1. **(20s) The problem in their words.** Track every youth from referral to outcome; learn which providers work.
 2. **(60s) The supervisor's morning.** Dashboard, the Northgate finding, provider outcomes, the data-quality checks.
@@ -69,6 +69,6 @@ The full script, ordered by the County's scoring weights, is in [`docs/LOOM_SCRI
 6. **(45s) Trust.** Requirement matrix, one-click County data export, "we stress-tested this against your RFP."
 7. **(25s) Cost + timeline.** $49k over 5 years, no per-seat fees, free data extraction; live in 6 weeks.
 
-## Open questions for Mike (resolved)
+## Open questions (resolved)
 - Model provider: Cerebras `gpt-oss-120b` (free tier), with a keyword-rules fallback and a daily call cap.
 - Deployment: Vercel, https://concourse-deliverable-personal-c635.vercel.app

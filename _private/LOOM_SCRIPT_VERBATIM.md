@@ -1,6 +1,6 @@
 # Loom script: run-through copy (talking points as bullets)
 
-> For practice runs. The recording outline is `docs/LOOM_SCRIPT.md`; both use the same click path and inputs.
+> For practice runs. The recording outline is `_private/LOOM_SCRIPT.md`; both use the same click path and inputs.
 
 **Audience:** Erie County Department of Health evaluators. You're a vendor submitting your RFP response, so talk to them, not to Concourse.
 **Length:** about 5 minutes.
